@@ -169,7 +169,6 @@ function initSidebar() {
       document.dispatchEvent(event);
     }
   });
-  });
 }
 
 if (document.readyState === 'loading') {
