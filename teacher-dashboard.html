@@ -6,46 +6,66 @@
     <title>Gyanshala Teacher Dashboard</title>
     <link rel="stylesheet" href="teacher-dashboard.css">
     <link rel="stylesheet" href="dashboard-extension.css">
-    <link rel="stylesheet" href="shared-sidebar.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- jsPDF and jsPDF-AutoTable CDNs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
-    <script src="shared-sidebar.js" defer></script>
 </head>
-<body data-role="teacher" data-active-page="home">
+<body>
 
 <div class="app-container">
     
     <!-- Left Sidebar -->
-    <aside class="sidebar" aria-expanded="false">
+    <aside class="sidebar">
         <div class="sidebar-header" id="menu-toggle" style="cursor: pointer;">
             <span class="material-symbols-rounded text-primary" style="font-size: 32px;">school</span>
             <h2>Gyanshala</h2>
         </div>
         
-        <!-- Mobile User Profile -->
-        <div class="sidebar-mobile-profile">
-            <div class="avatar" id="sidebar-mobile-avatar">T</div>
-            <div class="sidebar-mobile-profile-info">
-                <span class="name" id="sidebar-mobile-name">Loading...</span>
-                <span class="role" id="sidebar-mobile-role">Teacher</span>
-            </div>
-        </div>
-        
         <nav class="sidebar-nav">
-            <!-- Dynamically populated by shared-sidebar.js -->
+            <a href="#" class="nav-item active" data-target="home">
+                <span class="material-symbols-rounded">dashboard</span> <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-target="students">
+                <span class="material-symbols-rounded">groups</span> <span>My Students</span>
+            </a>
+            <a href="#" class="nav-item" data-target="addstudent">
+                <span class="material-symbols-rounded">person_add</span> <span>Add Student</span>
+            </a>
+            <a href="#" class="nav-item" data-target="studentprofile">
+                <span class="material-symbols-rounded">account_circle</span> <span>Student Profile</span>
+            </a>
+            <a href="#" class="nav-item" data-target="attendance">
+                <span class="material-symbols-rounded">event_available</span> <span>Daily Attendance</span>
+            </a>
+            <a href="#" class="nav-item" data-target="assessments">
+                <span class="material-symbols-rounded">quiz</span> <span>Assessments</span>
+            </a>
+            <a href="#" class="nav-item" data-target="alerts">
+                <span class="material-symbols-rounded">warning</span> <span>Dropout Alerts</span>
+            </a>
+            <a href="#" class="nav-item" data-target="messages">
+                <span class="material-symbols-rounded">chat</span> <span>Messages</span>
+            </a>
+            <a href="#" class="nav-item" data-target="profile">
+                <span class="material-symbols-rounded">person</span> <span>Profile</span>
+            </a>
+            <a href="#" class="nav-item" data-target="settings">
+                <span class="material-symbols-rounded">settings</span> <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item" data-target="help">
+                <span class="material-symbols-rounded">help</span> <span>Help</span>
+            </a>
         </nav>
 
         <div class="sidebar-footer">
             <button class="logout-btn">
                 <span class="material-symbols-rounded">logout</span> <span>Logout</span>
             </button>
-            <div class="sidebar-version">v1.0.0 &copy; 2026 Gyanshala</div>
         </div>
     </aside>
     
-    <div class="sidebar-overlay" id="mobile-sidebar-overlay"></div>
+    <div class="sidebar-overlay" id="mobile-sidebar-overlay" style="display: none;"></div>
 
     <!-- Main Content Area -->
     <div class="main-content">

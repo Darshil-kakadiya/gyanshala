@@ -6,7 +6,6 @@
     <title>Gyan Shala Main Office Dashboard</title>
     <link rel="stylesheet" href="admin-dashboard.css">
     <link rel="stylesheet" href="dashboard-extension.css">
-    <link rel="stylesheet" href="shared-sidebar.css">
     <!-- jsPDF and jsPDF-AutoTable CDNs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
@@ -14,41 +13,83 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Google Maps MarkerClusterer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js"></script>
-    <script src="shared-sidebar.js" defer></script>
 </head>
-<body data-role="admin" data-active-page="home">
+<body>
 
 <div class="app-container">
     
     <!-- Collapsible Sidebar -->
-    <aside class="sidebar" aria-expanded="false">
+    <aside class="sidebar">
         <div class="sidebar-header" id="menu-toggle" style="cursor: pointer;">
             <span class="material-symbols-rounded text-primary" style="font-size: 32px;">school</span>
             <h2>Gyan Shala</h2>
         </div>
         
-        <!-- Mobile User Profile -->
-        <div class="sidebar-mobile-profile">
-            <div class="avatar" id="sidebar-mobile-avatar">A</div>
-            <div class="sidebar-mobile-profile-info">
-                <span class="name" id="sidebar-mobile-name">Loading...</span>
-                <span class="role" id="sidebar-mobile-role">Admin</span>
-            </div>
-        </div>
-        
         <nav class="sidebar-nav">
-            <!-- Dynamically populated by shared-sidebar.js -->
+            <a href="#" class="nav-item active" data-target="home">
+                <span class="material-symbols-rounded">dashboard</span> <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-target="centers">
+                <span class="material-symbols-rounded">corporate_fare</span> <span>Learning Centers</span>
+            </a>
+            <a href="#" class="nav-item" data-target="students">
+                <span class="material-symbols-rounded">groups</span> <span>Students</span>
+            </a>
+            <a href="#" class="nav-item" data-target="teachers">
+                <span class="material-symbols-rounded">cast_for_education</span> <span>Teachers</span>
+            </a>
+            <a href="#" class="nav-item" data-target="supervisors">
+                <span class="material-symbols-rounded">supervisor_account</span> <span>Supervisors</span>
+            </a>
+            <a href="#" class="nav-item" data-target="volunteers">
+                <span class="material-symbols-rounded">volunteer_activism</span> <span>Volunteers</span>
+            </a>
+            <a href="#" class="nav-item" data-target="parents">
+                <span class="material-symbols-rounded">family_restroom</span> <span>Parents</span>
+            </a>
+            <a href="#" class="nav-item" data-target="attendance">
+                <span class="material-symbols-rounded">fact_check</span> <span>Attendance Reports</span>
+            </a>
+            <a href="#" class="nav-item" data-target="progress">
+                <span class="material-symbols-rounded">analytics</span> <span>Learning Progress</span>
+            </a>
+            <a href="#" class="nav-item" data-target="dropout">
+                <span class="material-symbols-rounded">warning</span> <span>Dropout Risk</span>
+            </a>
+            <a href="#" class="nav-item" data-target="resources">
+                <span class="material-symbols-rounded">inventory_2</span> <span>Resources</span>
+            </a>
+            <a href="#" class="nav-item" data-target="notifications">
+                <span class="material-symbols-rounded">notifications</span> <span>Notifications</span>
+            </a>
+            <a href="#" class="nav-item" data-target="reports">
+                <span class="material-symbols-rounded">article</span> <span>Reports</span>
+            </a>
+            <a href="#" class="nav-item" data-target="gismap">
+                <span class="material-symbols-rounded">map</span> <span>GIS Resource Map</span>
+            </a>
+            <a href="#" class="nav-item" data-target="chatbot">
+                <span class="material-symbols-rounded">chat</span> <span>Chatbot Logs</span>
+            </a>
+            <a href="#" class="nav-item" data-target="users">
+                <span class="material-symbols-rounded">manage_accounts</span> <span>User Management</span>
+            </a>
+            <a href="#" class="nav-item" data-target="settings">
+                <span class="material-symbols-rounded">settings</span> <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item" data-target="profile">
+                <span class="material-symbols-rounded">person</span> <span>Profile</span>
+            </a>
         </nav>
 
         <div class="sidebar-footer">
             <button class="logout-btn">
                 <span class="material-symbols-rounded">logout</span> <span>Logout</span>
             </button>
-            <div class="sidebar-version">v1.0.0 &copy; 2026 Gyanshala</div>
         </div>
     </aside>
     
-    <div class="sidebar-overlay" id="mobile-sidebar-overlay"></div>
+    <div class="sidebar-overlay" id="mobile-sidebar-overlay" style="display: none;"></div>
 
     <!-- Main Content Area -->
     <div class="main-content">

@@ -24,15 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const roleBadge = document.querySelector('.welcome-msg .role-badge');
     if (roleBadge) roleBadge.textContent = currentUser.role;
-    
-    const sidebarMobileName = document.getElementById('sidebar-mobile-name');
-    if (sidebarMobileName) sidebarMobileName.textContent = currentUser.fullName;
-    
-    const sidebarMobileRole = document.getElementById('sidebar-mobile-role');
-    if (sidebarMobileRole) sidebarMobileRole.textContent = currentUser.role;
-
-    const sidebarMobileAvatar = document.getElementById('sidebar-mobile-avatar');
-    if (sidebarMobileAvatar) sidebarMobileAvatar.textContent = currentUser.fullName.charAt(0);
 
     const topBarAvatar = document.querySelector('.top-bar-right .avatar');
     if (topBarAvatar) topBarAvatar.textContent = currentUser.fullName.charAt(0);
@@ -98,28 +89,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.addEventListener('navItemSelected', (e) => {
-        const target = e.detail.target;
-        if (target) {
-            switchView(target);
-            window.location.hash = target;
-        }
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = item.getAttribute('data-target');
+            if (target) {
+                switchView(target);
+                window.location.hash = target;
+            }
+        });
     });
-
-    // Handle hash change for back/forward browser buttons
-    window.addEventListener('hashchange', () => {
-        const target = window.location.hash.replace('#', '');
-        if (target) {
-            switchView(target);
-        }
-    });
-
-    // Initial load based on hash
-    if (window.location.hash) {
-        const target = window.location.hash.replace('#', '');
-        switchView(target);
-    }
-
 
     const headerAvatar = document.getElementById('header-avatar');
     if (headerAvatar) {

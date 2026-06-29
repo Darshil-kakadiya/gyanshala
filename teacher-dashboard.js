@@ -37,15 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const pAddress = document.getElementById('profile-address');
     if (pAddress) pAddress.textContent = currentUser.address || `${currentUser.city || ''}, ${currentUser.state || ''}`;
 
-    const sidebarMobileName = document.getElementById('sidebar-mobile-name');
-    if (sidebarMobileName) sidebarMobileName.textContent = currentUser.fullName;
-    
-    const sidebarMobileRole = document.getElementById('sidebar-mobile-role');
-    if (sidebarMobileRole) sidebarMobileRole.textContent = currentUser.role || 'Teacher';
-
-    const sidebarMobileAvatar = document.getElementById('sidebar-mobile-avatar');
-    if (sidebarMobileAvatar) sidebarMobileAvatar.textContent = currentUser.fullName.charAt(0);
-
     // Sidebar Collapsing
     const sidebar = document.querySelector('.sidebar');
     const menuToggle = document.getElementById('menu-toggle');
@@ -86,27 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
         safeRender(viewId);
     }
 
-    document.addEventListener('navItemSelected', (e) => {
-        const target = e.detail.target;
-        if (target) {
-            switchView(target);
-            window.location.hash = target;
-        }
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = item.getAttribute('data-target');
+            if (target) {
+                switchView(target);
+                window.location.hash = target;
+            }
+        });
     });
-
-    // Handle hash change for back/forward browser buttons
-    window.addEventListener('hashchange', () => {
-        const target = window.location.hash.replace('#', '');
-        if (target) {
-            switchView(target);
-        }
-    });
-
-    // Initial load based on hash
-    if (window.location.hash) {
-        const target = window.location.hash.replace('#', '');
-        switchView(target);
-    }
 
     const headerAvatar = document.getElementById('header-avatar');
     if (headerAvatar) {
@@ -448,6 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const isAbsent = document.getElementById(`att-${idx}-a`).checked;
                     if (isAbsent) {
                         absentCount++;
+                        // Lower attendance rate dynamically for testing risk triggers
                         s.attendance = '50%';
                     } else {
                         s.attendance = '95%';

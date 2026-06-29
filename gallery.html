@@ -29,11 +29,7 @@
                 <form id="upload-media-form">
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label for="media-url">Photo or Video URL</label>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="url" id="media-url" required placeholder="https://example.com/image.jpg" style="flex: 1; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
-                            <input type="file" id="media-file" accept="image/*,video/*" style="display: none;" onchange="if(this.files[0]) document.getElementById('media-url').value = this.files[0].name;">
-                            <button type="button" class="btn-primary" style="padding: 0 1rem; border-radius: 8px; font-size: 1.5rem;" onclick="document.getElementById('media-file').click()">+</button>
-                        </div>
+                        <input type="url" id="media-url" required placeholder="https://example.com/image.jpg" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label for="media-type">Type</label>
