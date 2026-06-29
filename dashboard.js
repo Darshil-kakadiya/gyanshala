@@ -599,6 +599,18 @@ document.addEventListener('DOMContentLoaded', () => {
     renderVisits();
     renderResources();
     renderMessages();
+
+    // Cross-tab Real-time Sync for Chat Messages & Storage
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'chat_messages') {
+            const activeChat = document.querySelector('.chat-item.active');
+            if (activeChat) {
+                const contactEmail = activeChat.getAttribute('data-email');
+                const headerName = activeChat.querySelector('h4').textContent;
+                loadChat(contactEmail, headerName);
+            }
+        }
+    });
     renderAlerts();
 
 });

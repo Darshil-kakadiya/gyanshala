@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let clientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '510621809360-hpj4i8b8i0mo10ua602rblnndl6f06gl.apps.googleusercontent.com';
+        let clientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '176581397137-ar8ebldnqh70vk39dm4o7hg9i6p4tsmn.apps.googleusercontent.com';
                 google.accounts.id.initialize({
                     client_id: clientID,
                     callback: window.handleGoogleLoginResponse,
