@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Centers | Gyan Shala Smart Education Platform</title>
+    <meta name="description" content="Find a Gyan Shala learning center near you.">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="/js/main.js" defer></script>
+    <script type="module" src="/js/pages/centers-page.js" defer></script>
+    <style>
+      #map-container {
+        width: 100%;
+        height: 500px;
+        margin-top: 30px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <section class="learning-centers" style="padding-top: 120px;">
+        <div class="container">
+            <div class="centers-header">
+                <div>
+                    <span class="section-badge">Locations</span>
+                    <h2 class="section-title">Our Learning Centers</h2>
+                </div>
+                <a href="#map-container" class="btn-outline">View Map</a>
+            </div>
+            
+            <div class="centers-grid" id="centers-container">
+                <!-- Centers will be rendered here dynamically -->
+            </div>
+
+            <div id="map-container"></div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+</body>
+</html>

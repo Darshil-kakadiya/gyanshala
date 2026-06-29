@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Gyan Shala Smart Education Platform</title>
+    <meta name="description" content="View moments from life at Gyan Shala.">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="/js/main.js" defer></script>
+    <script type="module" src="/js/pages/gallery-page.js" defer></script>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <section class="gallery" style="padding-top: 120px; min-height: 80vh;">
+        <div class="container text-center">
+            <span class="section-badge">Moments</span>
+            <h2 class="section-title">Life at Gyan Shala</h2>
+            
+            <div class="gallery-filters" style="margin-bottom: 30px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <button class="btn-primary filter-btn active" data-filter="all">All</button>
+                <button class="btn-outline filter-btn" data-filter="Classroom">Classrooms</button>
+                <button class="btn-outline filter-btn" data-filter="Events">Events</button>
+                <button class="btn-outline filter-btn" data-filter="Students">Students</button>
+            </div>
+
+            <div class="masonry-gallery" id="gallery-container">
+                <!-- Gallery will be rendered here dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+</body>
+</html>

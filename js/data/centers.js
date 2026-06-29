@@ -1,0 +1,50 @@
+export const centers = [
+  {
+    id: 'sunrise-center',
+    name: 'Sunrise Center',
+    status: 'Active',
+    area: 'North Slum',
+    address: '123 North Slum Rd, District 1',
+    teacher: 'Riya Sharma',
+    students: 25,
+    classes: 'KG, Std 1',
+    timing: '08:00 AM - 12:00 PM',
+    phone: '+91-9876543210',
+    description: 'Providing early childhood education to children in the North Slum community.',
+    lat: 23.0338,
+    lng: 72.5850,
+    image: 'https://images.unsplash.com/photo-1524069290683-0457abfe42c3?w=500&fit=crop'
+  },
+  {
+    id: 'hope-hub',
+    name: 'Hope Hub',
+    status: 'Active',
+    area: 'East District',
+    address: '45 East District Blvd, District 2',
+    teacher: 'Amit Kumar',
+    students: 30,
+    classes: 'Std 1, Std 2',
+    timing: '01:00 PM - 05:00 PM',
+    phone: '+91-9876543211',
+    description: 'Focusing on foundational literacy and numeracy for primary students.',
+    lat: 23.0225,
+    lng: 72.5714,
+    image: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=500&fit=crop'
+  },
+  {
+    id: 'bright-future',
+    name: 'Bright Future',
+    status: 'Active',
+    area: 'West Zone',
+    address: '88 West Zone Ave, District 3',
+    teacher: 'Priya Patel',
+    students: 20,
+    classes: 'Std 2, Std 3',
+    timing: '09:00 AM - 01:00 PM',
+    phone: '+91-9876543212',
+    description: 'Advanced foundational skills and school readiness program.',
+    lat: 23.0145,
+    lng: 72.5918,
+    image: 'https://images.unsplash.com/photo-1503454537195-1dc534b36fc6?w=500&fit=crop'
+  }
+];
