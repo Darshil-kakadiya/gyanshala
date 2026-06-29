@@ -401,6 +401,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const payload = decodeJwt(response.credential);
             console.log("Real Google Profile:", payload);
 
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const existingUser = users.find(u => u.email.toLowerCase() === payload.email.toLowerCase());
+
+            if (existingUser) {
+                // User exists, login directly with existing role
+                localStorage.setItem('currentUser', JSON.stringify(existingUser));
+                alert(`Logged in with Google as ${existingUser.fullName}!`);
+                
+                // Route to correct dashboard
+                if (existingUser.role === 'main_office') {
+                    window.location.href = 'admin-dashboard.html';
+                } else if (existingUser.role === 'supervisor') {
+                    window.location.href = 'dashboard.html';
+                } else if (existingUser.role === 'teacher') {
+                    window.location.href = 'teacher-dashboard.html';
+                } else if (existingUser.role === 'volunteer') {
+                    window.location.href = 'volunteer-dashboard.html';
+                }
+                return;
+            }
+
             googleTempUser = {
                 id: 'USER-G-' + Date.now(),
                 fullName: payload.name,
@@ -417,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 approved: true
             };
 
-            // Show the role selection modal overlay
+            // Show the role selection modal overlay for new users
             if (googleRoleModal) {
                 googleRoleModal.classList.add('active');
             } else {

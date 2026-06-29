@@ -26,18 +26,7 @@ export function renderFooter() {
                     <h4>Get Involved</h4>
                     <ul>
                         <li><a href="/volunteer.html">Volunteer</a></li>
-                        <li><a href="#">Donate</a></li>
-                        <li><a href="#">Partner with us</a></li>
-                        <li><a href="#">Careers</a></li>
                     </ul>
-                </div>
-                <div class="footer-newsletter">
-                    <h4>Newsletter</h4>
-                    <p>Subscribe to get updates on our impact.</p>
-                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
-                        <input type="email" placeholder="Email address" required>
-                        <button type="submit" class="btn-primary">Subscribe</button>
-                    </form>
                 </div>
             </div>
             <div class="footer-bottom">

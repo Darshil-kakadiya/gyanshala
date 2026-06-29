@@ -22,6 +22,39 @@
         </div>
     </section>
 
+    <section class="share-story-section" style="padding: 40px 0; background: var(--bg-alt);">
+        <div class="container">
+            <div class="card" style="max-width: 600px; margin: 0 auto; text-align: left; padding: 2rem;">
+                <h3 style="margin-bottom: 1rem; text-align: center;">Share Your Experience</h3>
+                <form id="share-story-form">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="story-name">Name</label>
+                        <input type="text" id="story-name" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="story-role">Role</label>
+                        <select id="story-role" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                            <option value="">Select Role</option>
+                            <option value="Student">Student</option>
+                            <option value="Parent">Parent</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Volunteer">Volunteer</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="story-image">Photo URL (Optional)</label>
+                        <input type="url" id="story-image" placeholder="https://example.com/photo.jpg" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="story-text">Your Story</label>
+                        <textarea id="story-text" rows="4" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Submit Story</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <div id="footer-placeholder"></div>
 </body>
 </html>

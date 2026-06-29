@@ -1,6 +1,6 @@
 export function renderProgramCard(program) {
   return `
-    <div class="program-glass-card ${program.colorClass}">
+    <div class="program-glass-card ${program.colorClass}" id="card-${program.id}">
         <div class="program-icon">${program.icon}</div>
         <h3>${program.title}</h3>
         <p><strong>Age:</strong> ${program.ageGroup} | <strong>Duration:</strong> ${program.duration}</p>

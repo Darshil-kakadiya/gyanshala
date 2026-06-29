@@ -24,6 +24,32 @@
                 <button class="btn-outline filter-btn" data-filter="Students">Students</button>
             </div>
 
+            <div class="card" style="max-width: 600px; margin: 0 auto 40px auto; text-align: left; padding: 2rem;">
+                <h3 style="margin-bottom: 1rem; text-align: center;">Add Photo/Video</h3>
+                <form id="upload-media-form">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="media-url">Photo or Video URL</label>
+                        <input type="url" id="media-url" required placeholder="https://example.com/image.jpg" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="media-type">Type</label>
+                        <select id="media-type" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                            <option value="Photo">Photo</option>
+                            <option value="Video">Video</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="media-category">Category</label>
+                        <select id="media-category" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                            <option value="Classroom">Classroom</option>
+                            <option value="Events">Events</option>
+                            <option value="Students">Students</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Upload to Gallery</button>
+                </form>
+            </div>
+
             <div class="masonry-gallery" id="gallery-container">
                 <!-- Gallery will be rendered here dynamically -->
             </div>
