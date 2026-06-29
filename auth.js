@@ -53,37 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Environment variables loader
     let envConfig = {
-        VITE_EMAILJS_SERVICE_ID: 'service_bjim45r',
-        VITE_EMAILJS_TEMPLATE_ID: 'template_9omfz1h'
+        VITE_EMAILJS_SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_bjim45r',
+        VITE_EMAILJS_TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_9omfz1h'
     };
 
-    async function loadEnv() {
-        try {
-            const res = await fetch('.env');
-            if (res.ok) {
-                const text = await res.text();
-                text.split('\n').forEach(line => {
-                    const parts = line.split('=');
-                    if (parts.length >= 2) {
-                        const key = parts[0].trim();
-                        const val = parts.slice(1).join('=').trim().replace(/^['"]|['"]$/g, '');
-                        if (key.startsWith('VITE_EMAILJS_')) {
-                            envConfig[key] = val;
-                        }
-                    }
-                });
-            }
-        } catch (e) {
-            console.warn('Could not read .env file. Using defaults.');
-        }
-        
-        // localStorage fallbacks for local file protocol
-        if (location.protocol === 'file:') {
-            envConfig.VITE_EMAILJS_SERVICE_ID = localStorage.getItem('VITE_EMAILJS_SERVICE_ID') || envConfig.VITE_EMAILJS_SERVICE_ID;
-            envConfig.VITE_EMAILJS_TEMPLATE_ID = localStorage.getItem('VITE_EMAILJS_TEMPLATE_ID') || envConfig.VITE_EMAILJS_TEMPLATE_ID;
-        }
+    // localStorage fallbacks for local file protocol
+    if (location.protocol === 'file:') {
+        envConfig.VITE_EMAILJS_SERVICE_ID = localStorage.getItem('VITE_EMAILJS_SERVICE_ID') || envConfig.VITE_EMAILJS_SERVICE_ID;
+        envConfig.VITE_EMAILJS_TEMPLATE_ID = localStorage.getItem('VITE_EMAILJS_TEMPLATE_ID') || envConfig.VITE_EMAILJS_TEMPLATE_ID;
     }
-    loadEnv();
 
     // DOM Element Queries
     const loginForm = document.getElementById('login-form');
@@ -452,26 +430,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    async function initPageGoogleSignIn() {
-        if (document.getElementById('google-btn-container')) {
-            // Load environment variables
-            let clientID = '510621809360-hpj4i8b8i0mo10ua602rblnndl6f06gl.apps.googleusercontent.com';
-            try {
-                const res = await fetch('.env');
-                if (res.ok) {
-                    const text = await res.text();
-                    text.split('\n').forEach(line => {
-                        const parts = line.split('=');
-                        if (parts.length >= 2 && parts[0].trim() === 'VITE_GOOGLE_CLIENT_ID') {
-                            clientID = parts.slice(1).join('=').trim().replace(/^['"]|['"]$/g, '');
-                        }
-                    });
-                }
-            } catch (e) {
-                console.warn('Skipped reading .env clientID, using default.');
-            }
+    function initPageGoogleSignIn() {
+        const btnContainer = document.getElementById('google-btn-container');
+        if (!btnContainer) return;
 
-            if (typeof google !== 'undefined') {
+        // Ensure google script is loaded
+        if (typeof google === 'undefined' || !google.accounts) {
+            setTimeout(initPageGoogleSignIn, 100);
+            return;
+        }
+
+        let clientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '510621809360-hpj4i8b8i0mo10ua602rblnndl6f06gl.apps.googleusercontent.com';
                 google.accounts.id.initialize({
                     client_id: clientID,
                     callback: window.handleGoogleLoginResponse,
@@ -509,8 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         btnContainer.parentNode.insertBefore(warningMsg, btnContainer.nextSibling);
                     }
                 }
-            }
-        }
     }
 
     // Modal Action Listeners
