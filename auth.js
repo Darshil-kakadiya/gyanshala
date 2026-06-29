@@ -172,6 +172,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+            
+            if (existingUser) {
+                // User exists, direct open (login bypass)
+                localStorage.setItem('currentUser', JSON.stringify(existingUser));
+                window.location.href = existingUser.role === 'admin' || existingUser.role === 'main_office' ? 'admin-dashboard.html' : `${existingUser.role}-dashboard.html`;
+                return;
+            }
+
             // Generate random 6-digit OTP code
             const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
             sessionStorage.setItem('reg_otp', otpCode);

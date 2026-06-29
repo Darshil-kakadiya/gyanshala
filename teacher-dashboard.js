@@ -88,6 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const headerAvatar = document.getElementById('header-avatar');
+    if (headerAvatar) {
+        headerAvatar.addEventListener('click', () => {
+            switchView('profile');
+            window.location.hash = 'profile';
+        });
+    }
     // Check URL hash on page load
     const initialHash = window.location.hash.replace('#', '');
     if (initialHash && document.getElementById(`view-${initialHash}`)) {
