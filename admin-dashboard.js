@@ -1793,3 +1793,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Mobile Sidebar Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileSidebarOverlay = document.getElementById('mobile-sidebar-overlay');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (mobileMenuBtn && mobileSidebarOverlay && sidebar) {
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.add('mobile-open');
+            mobileSidebarOverlay.classList.add('active');
+        });
+
+        mobileSidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('mobile-open');
+            mobileSidebarOverlay.classList.remove('active');
+        });
+
+        // Close sidebar when a nav item is clicked on mobile
+        const sideNavItems = document.querySelectorAll('.sidebar-nav .nav-item');
+        sideNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('mobile-open');
+                    mobileSidebarOverlay.classList.remove('active');
+                }
+            });
+        });
+    }
+});

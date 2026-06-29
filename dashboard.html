@@ -66,16 +66,23 @@
             </button>
         </div>
     </aside>
+    
+    <div class="sidebar-overlay" id="mobile-sidebar-overlay" style="display: none;"></div>
 
     <!-- Main Content Area -->
     <div class="main-content">
         
         <!-- Persistent Top App Bar -->
         <header class="top-app-bar">
-            <div class="welcome-msg">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button id="mobile-menu-btn" class="icon-btn mobile-only" style="display: none;">
+                    <span class="material-symbols-rounded">menu</span>
+                </button>
+                <div class="welcome-msg">
                 <span class="greeting">Good Morning,</span>
                 <h3>Rajesh Patel</h3>
                 <span class="role-badge">Supervisor</span>
+                </div>
             </div>
             
             <div class="top-bar-right">
