@@ -599,6 +599,71 @@ document.addEventListener('DOMContentLoaded', () => {
     renderVisits();
     renderResources();
     renderMessages();
+    renderScheduleAdmin();
+
+    function renderScheduleAdmin() {
+        const tbody = document.querySelector('#admin-schedule-table tbody');
+        if (!tbody) return;
+        
+        let schedules = JSON.parse(localStorage.getItem('schedules') || '[]');
+        if (schedules.length === 0) {
+            schedules = [
+                { id: 1, day: 'Monday', center: 'Bapunagar Center', activity: 'Teaching Mathematics, Storytelling' },
+                { id: 2, day: 'Tuesday', center: 'Naroda Center', activity: 'English Reading, Vocabulary Games' }
+            ];
+            localStorage.setItem('schedules', JSON.stringify(schedules));
+        }
+
+        tbody.innerHTML = '';
+        schedules.forEach(s => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${s.day}</strong></td>
+                <td>${s.center}</td>
+                <td>${s.activity}</td>
+                <td style="text-align:center;">
+                    <button class="btn-outline delete-schedule" data-id="${s.id || Math.random()}" style="color:var(--danger); border-color:var(--danger); padding:4px 8px;">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.querySelectorAll('.delete-schedule').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idToRemove = e.target.getAttribute('data-id');
+                schedules = schedules.filter(s => String(s.id) !== String(idToRemove));
+                localStorage.setItem('schedules', JSON.stringify(schedules));
+                window.dispatchEvent(new Event('storage'));
+                renderScheduleAdmin();
+            });
+        });
+        
+        const addBtn = document.getElementById('add-schedule-btn');
+        if (addBtn && !addBtn.dataset.bound) {
+            addBtn.dataset.bound = 'true';
+            addBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const day = document.getElementById('schedule-day').value;
+                const center = document.getElementById('schedule-center').value;
+                const activity = document.getElementById('schedule-activity').value;
+                
+                if(!center || !activity) {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+                
+                const schedulesArr = JSON.parse(localStorage.getItem('schedules') || '[]');
+                schedulesArr.push({ id: Date.now(), day, center, activity });
+                localStorage.setItem('schedules', JSON.stringify(schedulesArr));
+                window.dispatchEvent(new Event('storage'));
+                
+                document.getElementById('schedule-center').value = '';
+                document.getElementById('schedule-activity').value = '';
+                renderScheduleAdmin();
+                alert('Schedule added successfully!');
+            });
+        }
+    }
 
     // Cross-tab Real-time Sync for Chat Messages & Storage
     window.addEventListener('storage', (e) => {
@@ -609,9 +674,126 @@ document.addEventListener('DOMContentLoaded', () => {
                 const headerName = activeChat.querySelector('h4').textContent;
                 loadChat(contactEmail, headerName);
             }
+        } else if (e.key === 'schedules') {
+            const activeTarget = document.querySelector('.nav-item.active')?.getAttribute('data-target');
+            if (activeTarget === 'schedule') {
+                renderScheduleAdmin();
+            }
+        } else if (e.key === 'students' || e.key === 'assessments') {
+            const activeTarget = document.querySelector('.nav-item.active')?.getAttribute('data-target');
+            if (activeTarget === 'students') {
+                renderStudents();
+            }
         }
     });
     renderAlerts();
+
+    // Export Functions
+    function exportToExcel(students) {
+        try {
+            if (!students || students.length === 0) {
+                alert('No student records available to export.');
+                return;
+            }
+            let csv = "Student Name,Roll No,Learning Center,Guardian,Attendance,Status\n";
+            students.forEach((s, idx) => {
+                const roll = s.roll || 'GS-ST-' + (100 + idx);
+                csv += `"${s.name}","${roll}","${s.center}","${s.guardian}","${s.attendance || '100%'}","${s.status || 'Active'}"\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "student_directory.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (err) {
+            alert('Failed to export to Excel: ' + err.message);
+        }
+    }
+
+    function exportToPDF(students) {
+        try {
+            if (!students || students.length === 0) {
+                alert('No student records available to export.');
+                return;
+            }
+            const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
+            if (jsPDFClass) {
+                const doc = new jsPDFClass();
+                doc.setFontSize(18);
+                doc.text("Gyan Shala NGO - Student Directory", 14, 20);
+                doc.setFontSize(10);
+                doc.text("Generated on: " + new Date().toLocaleDateString(), 14, 28);
+                
+                const headers = [["Student Name", "Roll No", "Learning Center", "Guardian", "Attendance", "Status"]];
+                const data = students.map((s, idx) => [
+                    s.name, 
+                    s.roll || 'GS-ST-' + (100 + idx), 
+                    s.center, 
+                    s.guardian, 
+                    s.attendance || '100%', 
+                    s.status || 'Active'
+                ]);
+                
+                if (typeof doc.autoTable === 'function') {
+                    doc.autoTable({
+                        startY: 35,
+                        head: headers,
+                        body: data,
+                        theme: 'grid',
+                        headStyles: { fillColor: [37, 99, 235] },
+                        styles: { fontSize: 9 }
+                    });
+                } else {
+                    let y = 38;
+                    doc.setFontSize(9);
+                    doc.text("Student Name | Roll No | Learning Center | Guardian | Attendance | Status", 14, y);
+                    doc.line(14, y + 2, 196, y + 2);
+                    y += 10;
+                    data.forEach(row => {
+                        doc.text(row.join(" | "), 14, y);
+                        y += 7;
+                    });
+                }
+                doc.save('student_directory.pdf');
+            } else {
+                const printWindow = window.open('', '_blank');
+                if (printWindow) {
+                    printWindow.document.write('<html><head><title>Export PDF Fallback</title></head><body>');
+                    printWindow.document.write('<h2>Student Directory</h2><table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse; width:100%; font-family:sans-serif;">');
+                    printWindow.document.write('<tr><th>Name</th><th>Roll</th><th>Center</th><th>Attendance</th><th>Status</th></tr>');
+                    students.forEach((s, idx) => {
+                        printWindow.document.write(`<tr><td>${s.name}</td><td>${s.roll || 'GS-ST-'+(100+idx)}</td><td>${s.center}</td><td>${s.attendance||'100%'}</td><td>${s.status||'Active'}</td></tr>`);
+                    });
+                    printWindow.document.write('</table><script>window.onload = function() { window.print(); window.close(); }</script></body></html>');
+                    printWindow.document.close();
+                } else {
+                    alert('Popup blocker prevented printing fallback.');
+                }
+            }
+        } catch (err) {
+            alert('Failed to export to PDF: ' + err.message);
+        }
+    }
+
+    const exportExcelBtn = document.getElementById('export-excel-btn');
+    if (exportExcelBtn) {
+        exportExcelBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            exportToExcel(JSON.parse(localStorage.getItem('students') || '[]'));
+        });
+    }
+
+    const exportPdfBtn = document.getElementById('export-pdf-btn');
+    if (exportPdfBtn) {
+        exportPdfBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            exportToPDF(JSON.parse(localStorage.getItem('students') || '[]'));
+        });
+    }
 
 });
 

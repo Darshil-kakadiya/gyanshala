@@ -176,17 +176,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function initDashboardCharts(students) {
         if (typeof Chart === 'undefined') return;
 
-        // 1. Attendance Trend Line Chart
+        // 1. Attendance Trend Line Chart (Simulated Weekly but dynamic avg)
         const attendanceCtx = document.getElementById('attendanceTrendChart');
         if (attendanceCtx) {
             if (attendanceChart) attendanceChart.destroy();
+            let totalAttendanceSum = 0;
+            students.forEach(s => totalAttendanceSum += parseFloat(s.attendance || 100));
+            const avg = students.length > 0 ? Math.round(totalAttendanceSum / students.length) : 0;
+            
             attendanceChart = new Chart(attendanceCtx, {
                 type: 'line',
                 data: {
                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
                     datasets: [{
-                        label: 'Class Attendance %',
-                        data: [92, 94, 91, 95, 93],
+                        label: 'Class Avg Attendance %',
+                        data: [avg > 2 ? avg-2 : 0, avg > 1 ? avg+1 : 0, avg > 3 ? avg-3 : 0, avg > 2 ? avg+2 : 0, avg],
                         borderColor: '#2563EB',
                         backgroundColor: 'rgba(37, 99, 235, 0.05)',
                         fill: true,
@@ -202,16 +206,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if (performanceCtx) {
             if (performanceChart) performanceChart.destroy();
             
-            // Derive student names and attendance rates for comparison
-            const labels = students.slice(0, 5).map(s => s.name) || ['Ravi', 'Sneha'];
-            const data = students.slice(0, 5).map(s => parseFloat(s.attendance)) || [90, 95];
+            // Derive average marks per student from real assessments data
+            const assessments = JSON.parse(localStorage.getItem('assessments') || '[]');
+            const studentScores = {};
+            assessments.forEach(a => {
+                if (!studentScores[a.studentName]) studentScores[a.studentName] = [];
+                studentScores[a.studentName].push(parseFloat(a.marks || 0));
+            });
+
+            let labels = [];
+            let data = [];
+            
+            Object.keys(studentScores).slice(0, 5).forEach(studentName => {
+                const scores = studentScores[studentName];
+                const avgScore = scores.reduce((sum, s) => sum + s, 0) / scores.length;
+                labels.push(studentName);
+                data.push(Math.round(avgScore));
+            });
+            
+            // Fallback if no assessments yet
+            if (labels.length === 0 && students.length > 0) {
+                labels = students.slice(0, 5).map(s => s.name);
+                data = students.slice(0, 5).map(s => parseFloat(s.attendance));
+            }
 
             performanceChart = new Chart(performanceCtx, {
                 type: 'bar',
                 data: {
                     labels: labels.length > 0 ? labels : ['No Data'],
                     datasets: [{
-                        label: 'Attendance Rate',
+                        label: assessments.length > 0 ? 'Average Marks (%)' : 'Attendance Rate (No Exams)',
                         data: data.length > 0 ? data : [0],
                         backgroundColor: '#7C3AED',
                         borderRadius: 6
@@ -871,6 +895,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const contactEmail = activeChat.getAttribute('data-email');
                 const headerName = activeChat.querySelector('h4').textContent;
                 loadChat(contactEmail, headerName);
+            }
+        } else if (e.key === 'students' || e.key === 'assessments') {
+            const activeTarget = document.querySelector('.nav-item.active')?.getAttribute('data-target');
+            if (activeTarget === 'home') {
+                renderDashboardHome();
+            } else if (activeTarget === 'students') {
+                renderStudents();
+            } else if (activeTarget === 'assessments') {
+                renderAssessments();
             }
         }
     });

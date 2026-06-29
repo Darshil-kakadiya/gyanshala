@@ -41,7 +41,10 @@
                 <span class="material-symbols-rounded">map</span> Center Visit Reports
             </a>
             <a href="#" class="nav-item" data-target="resources">
-                <span class="material-symbols-rounded">inventory_2</span> Resource Requests
+                <span class="material-symbols-rounded">inventory_2</span> <span>Resources</span>
+            </a>
+            <a href="#" class="nav-item" data-target="schedule">
+                <span class="material-symbols-rounded">calendar_month</span> <span>Manage Schedule</span>
             </a>
             <a href="#" class="nav-item" data-target="messages">
                 <span class="material-symbols-rounded">chat</span> Messages
@@ -392,6 +395,47 @@
             </div>
         </section>
 
+        <!-- NEW: Manage Schedule View -->
+        <section id="view-schedule" class="page-view">
+            <h2>Manage Weekly Schedule</h2>
+            <div class="glass-card" style="max-width: 600px; margin-top:20px; margin-bottom:20px;">
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:8px; font-weight:600; color:var(--text-dark);">Day</label>
+                    <select id="schedule-day" style="width:100%; padding:10px; border:1px solid var(--border); border-radius: var(--radius-sm); outline:none; background:var(--background); color:var(--text-dark);">
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                        <option>Saturday</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:8px; font-weight:600; color:var(--text-dark);">Center</label>
+                    <input type="text" id="schedule-center" placeholder="e.g. Bapunagar Center" style="width:100%; padding:10px; border:1px solid var(--border); border-radius: var(--radius-sm); outline:none; background:var(--background); color:var(--text-dark);" required>
+                </div>
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label style="display:block; margin-bottom:8px; font-weight:600; color:var(--text-dark);">Activity</label>
+                    <input type="text" id="schedule-activity" placeholder="e.g. Teaching Mathematics" style="width:100%; padding:10px; border:1px solid var(--border); border-radius: var(--radius-sm); outline:none; background:var(--background); color:var(--text-dark);" required>
+                </div>
+                <button class="btn-primary" id="add-schedule-btn">Add to Schedule</button>
+            </div>
+            
+            <table class="data-table" id="admin-schedule-table" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left;">Day</th>
+                        <th style="text-align:left;">Center</th>
+                        <th style="text-align:left;">Activity</th>
+                        <th style="text-align:center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Schedule rows loaded dynamically -->
+                </tbody>
+            </table>
+        </section>
+
         <!-- 8. Resource Requests View -->
         <section id="view-resources" class="page-view">
             <h2>Resource Requests</h2>
@@ -472,8 +516,8 @@
             <div class="flex-between" style="margin-bottom: 24px;">
                 <h2>Generate Reports</h2>
                 <div class="flex-start">
-                    <button class="btn-outline">Export PDF</button>
-                    <button class="btn-primary" style="background:var(--success);">Export Excel</button>
+                    <button class="btn-outline" id="export-pdf-btn">Export PDF</button>
+                    <button class="btn-primary" id="export-excel-btn" style="background:var(--success);">Export Excel</button>
                 </div>
             </div>
             <div class="grid-cards">
@@ -595,6 +639,9 @@
     </div>
 </div>
 
-<script type="module" src="dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="dashboard.js"></script>
 </body>
 </html>

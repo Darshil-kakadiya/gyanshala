@@ -224,14 +224,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSchedule() {
         const tbody = document.querySelector('#view-schedule tbody');
         if (!tbody) return;
-        tbody.innerHTML = `
-            <tr><td><strong>Monday</strong></td><td>Bapunagar Center</td><td>Teaching Mathematics, Storytelling</td></tr>
-            <tr><td><strong>Tuesday</strong></td><td>Naroda Center</td><td>English Reading, Vocabulary Games</td></tr>
-            <tr><td><strong>Wednesday</strong></td><td>Bapunagar Center</td><td>Science Experiments, Quiz Competition</td></tr>
-            <tr><td><strong>Thursday</strong></td><td>Naroda Center</td><td>Computer Basics, Homework Review</td></tr>
-            <tr><td><strong>Friday</strong></td><td>Bapunagar Center</td><td>Environmental Awareness, Tree Plantation</td></tr>
-            <tr><td><strong>Saturday</strong></td><td>Naroda Center</td><td>Sports, Yoga, Life Skills Session</td></tr>
-        `;
+        
+        let schedules = JSON.parse(localStorage.getItem('schedules') || '[]');
+        if (schedules.length === 0) {
+            schedules = [
+                { day: 'Monday', center: 'Bapunagar Center', activity: 'Teaching Mathematics, Storytelling' },
+                { day: 'Tuesday', center: 'Naroda Center', activity: 'English Reading, Vocabulary Games' },
+                { day: 'Wednesday', center: 'Bapunagar Center', activity: 'Science Experiments, Quiz Competition' },
+                { day: 'Thursday', center: 'Naroda Center', activity: 'Computer Basics, Homework Review' },
+                { day: 'Friday', center: 'Bapunagar Center', activity: 'Environmental Awareness, Tree Plantation' },
+                { day: 'Saturday', center: 'Naroda Center', activity: 'Sports, Yoga, Life Skills Session' }
+            ];
+            localStorage.setItem('schedules', JSON.stringify(schedules));
+        }
+
+        tbody.innerHTML = '';
+        schedules.forEach(s => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><strong>${s.day}</strong></td><td>${s.center}</td><td>${s.activity}</td>`;
+            tbody.appendChild(tr);
+        });
     }
 
     // D. Attendance History
@@ -607,6 +619,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const contactEmail = activeChat.getAttribute('data-email');
                 const headerName = activeChat.querySelector('h4').textContent;
                 loadChat(contactEmail, headerName);
+            }
+        } else if (e.key === 'schedules') {
+            const activeTarget = document.querySelector('.nav-item.active')?.getAttribute('data-target');
+            if (activeTarget === 'schedule') {
+                renderSchedule();
+            }
+        } else if (e.key === 'attendance' || e.key === 'students') {
+            const activeTarget = document.querySelector('.nav-item.active')?.getAttribute('data-target');
+            if (activeTarget === 'home') {
+                renderDashboardHome();
+            } else if (activeTarget === 'attendance') {
+                renderAttendance();
             }
         }
     });

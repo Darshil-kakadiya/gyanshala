@@ -176,6 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'notifications':
                 renderNotifications();
                 break;
+            case 'schedule':
+                renderScheduleAdmin();
+                break;
             case 'reports':
                 renderReports();
                 break;
@@ -697,6 +700,71 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(`Announcement successfully broadcasted to ${group} and stored in notifications.`);
                 document.getElementById('announce-msg').value = '';
                 renderNotificationsPanel();
+            });
+        }
+    }
+
+    // NEW: Render Admin Schedule View
+    function renderScheduleAdmin() {
+        const tbody = document.querySelector('#admin-schedule-table tbody');
+        if (!tbody) return;
+        
+        let schedules = JSON.parse(localStorage.getItem('schedules') || '[]');
+        if (schedules.length === 0) {
+            schedules = [
+                { id: 1, day: 'Monday', center: 'Bapunagar Center', activity: 'Teaching Mathematics, Storytelling' },
+                { id: 2, day: 'Tuesday', center: 'Naroda Center', activity: 'English Reading, Vocabulary Games' }
+            ];
+            localStorage.setItem('schedules', JSON.stringify(schedules));
+        }
+
+        tbody.innerHTML = '';
+        schedules.forEach(s => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${s.day}</strong></td>
+                <td>${s.center}</td>
+                <td>${s.activity}</td>
+                <td style="text-align:center;">
+                    <button class="btn-outline delete-schedule" data-id="${s.id || Math.random()}" style="color:var(--danger); border-color:var(--danger); padding:4px 8px;">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.querySelectorAll('.delete-schedule').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idToRemove = e.target.getAttribute('data-id');
+                schedules = schedules.filter(s => String(s.id) !== String(idToRemove));
+                localStorage.setItem('schedules', JSON.stringify(schedules));
+                window.dispatchEvent(new Event('storage'));
+                renderScheduleAdmin();
+            });
+        });
+        
+        const addBtn = document.getElementById('add-schedule-btn');
+        if (addBtn && !addBtn.dataset.bound) {
+            addBtn.dataset.bound = 'true';
+            addBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const day = document.getElementById('schedule-day').value;
+                const center = document.getElementById('schedule-center').value;
+                const activity = document.getElementById('schedule-activity').value;
+                
+                if(!center || !activity) {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+                
+                const schedulesArr = JSON.parse(localStorage.getItem('schedules') || '[]');
+                schedulesArr.push({ id: Date.now(), day, center, activity });
+                localStorage.setItem('schedules', JSON.stringify(schedulesArr));
+                window.dispatchEvent(new Event('storage'));
+                
+                document.getElementById('schedule-center').value = '';
+                document.getElementById('schedule-activity').value = '';
+                renderScheduleAdmin();
+                alert('Schedule added successfully!');
             });
         }
     }
@@ -1702,4 +1770,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Cross-tab Real-time Sync for Data Updates
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'schedules') {
+            const activeTarget = document.querySelector('.nav-item.active')?.getAttribute('data-target');
+            if (activeTarget === 'schedule') {
+                renderScheduleAdmin();
+            }
+        } else if (e.key === 'students' || e.key === 'assessments' || e.key === 'users') {
+            const activeTarget = document.querySelector('.nav-item.active')?.getAttribute('data-target');
+            if (activeTarget === 'home') {
+                renderDashboardHome();
+            } else if (activeTarget === 'students') {
+                renderStudents();
+            } else if (activeTarget === 'teachers') {
+                renderTeachers();
+            } else if (activeTarget === 'volunteers') {
+                renderVolunteers();
+            } else if (activeTarget === 'supervisors') {
+                renderSupervisors();
+            }
+        }
+    });
 });
