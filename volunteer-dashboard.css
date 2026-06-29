@@ -611,9 +611,6 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 /* Responsive Overrides */
 @media(max-width: 768px) {
-  .sidebar { width: 80px; }
-  .sidebar-header h2, .nav-item span:not(.material-symbols-rounded), .logout-btn span:not(.material-symbols-rounded) { display: none; }
-  .sidebar-header { justify-content: center; }
   .grid-split { grid-template-columns: 1fr; }
   .search-bar { display: none; }
 }
