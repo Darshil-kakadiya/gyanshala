@@ -82,7 +82,7 @@ const sidebarConfig = {
   ]
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+function initSidebar() {
   const sidebar = document.querySelector('.sidebar');
   const sidebarNav = document.querySelector('.sidebar-nav');
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -169,4 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
       document.dispatchEvent(event);
     }
   });
-});
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSidebar);
+} else {
+  initSidebar();
+}
