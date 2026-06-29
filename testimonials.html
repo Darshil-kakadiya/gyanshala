@@ -43,7 +43,11 @@
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label for="story-image">Photo URL (Optional)</label>
-                        <input type="url" id="story-image" placeholder="https://example.com/photo.jpg" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                        <div style="display: flex; gap: 8px;">
+                            <input type="url" id="story-image" placeholder="https://example.com/photo.jpg" style="flex: 1; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                            <button type="button" onclick="document.getElementById('story-file-upload').click()" style="padding: 0 1rem; border: 1px solid var(--border); background: var(--surface); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;" title="Upload from file manager">+</button>
+                            <input type="file" id="story-file-upload" accept="image/*,video/*" style="display: none;" onchange="if(this.files[0]) document.getElementById('story-image').value = URL.createObjectURL(this.files[0])">
+                        </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
                         <label for="story-text">Your Story</label>
