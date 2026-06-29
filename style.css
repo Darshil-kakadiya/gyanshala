@@ -840,10 +840,10 @@ footer {
 }
 
 #programs-container.expanded-mode {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
     gap: 20px;
+    align-items: flex-start;
 }
 
 .program-glass-card {
@@ -851,18 +851,20 @@ footer {
 }
 
 #programs-container.expanded-mode .program-glass-card {
-    flex: 1;
-    min-width: 150px;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 #programs-container.expanded-mode .program-glass-card.expanded {
-    flex: 3;
-    min-width: 60%;
+    grid-column: 1;
+    grid-row: 1 / 10;
     cursor: default;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     border: 2px solid var(--primary-color);
+}
+
+#programs-container.expanded-mode .program-glass-card:not(.expanded) {
+    grid-column: 2;
 }
 
 #programs-container.expanded-mode .program-glass-card:not(.expanded) h3 {
@@ -884,6 +886,7 @@ footer {
 
 @media (max-width: 768px) {
     #programs-container.expanded-mode {
+        display: flex;
         flex-direction: column;
     }
     #programs-container.expanded-mode .program-glass-card.expanded {

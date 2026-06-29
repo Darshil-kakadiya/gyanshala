@@ -95,6 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeNav = document.querySelector(`.sidebar-nav .nav-item[data-target="${viewId}"]`);
         if (activeNav) activeNav.classList.add('active');
 
+        // Close sidebar on mobile and close notification panel
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        const notificationPanel = document.getElementById('notification-panel');
+        if (notificationPanel) notificationPanel.classList.remove('open');
+
         // Render target page content dynamically
         function safeRender(vId, retries = 5) {
             if (typeof Chart === 'undefined' && retries > 0) {
@@ -787,6 +793,8 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationPanel.classList.toggle('open');
             if (notificationPanel.classList.contains('open')) {
                 markNotificationsAsRead();
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar) sidebar.classList.remove('mobile-open');
             }
         }
     }
@@ -1701,12 +1709,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const profileName = document.querySelector('.profile-card h2');
         if (profileName) profileName.textContent = currentUser.fullName;
 
-        const infoValues = document.querySelectorAll('#view-profile .info-row .value');
-        if (infoValues.length >= 3) {
-            infoValues[0].textContent = currentUser.email;
-            infoValues[1].textContent = currentUser.mobile;
-            infoValues[2].textContent = `${currentUser.city}, ${currentUser.state}`;
-        }
+        const pEmail = document.getElementById('profile-email');
+        if(pEmail) pEmail.textContent = currentUser.email;
+
+        const pMobile = document.getElementById('profile-mobile');
+        if(pMobile) pMobile.textContent = currentUser.mobile || 'N/A';
+
+        const pAddress = document.getElementById('profile-address');
+        if(pAddress) pAddress.textContent = currentUser.address || `${currentUser.city || ''}, ${currentUser.state || ''}`;
     }
 
     // Quick Action Form Handlers

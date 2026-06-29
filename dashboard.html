@@ -101,7 +101,7 @@
                     <span class="badge-dot"></span>
                 </button>
                 
-                <div class="avatar">RP</div>
+                <div class="avatar" style="cursor: pointer;" onclick="document.querySelector('.sidebar-nav .nav-item[data-target=\'profile\']')?.click()">RP</div>
             </div>
         </header>
 
@@ -543,9 +543,10 @@
                 <span class="badge badge-primary">Senior Supervisor</span>
                 
                 <div style="width: 100%; text-align: left; margin-top: 32px;">
-                    <div class="info-row"><span class="label">Employee ID:</span><span class="value">GS-SUP-104</span></div>
-                    <div class="info-row"><span class="label">Email:</span><span class="value">rajesh.p@gyanshala.org</span></div>
-                    <div class="info-row"><span class="label">Phone:</span><span class="value">+91 98765 00000</span></div>
+                    <div class="info-row"><span class="label">Employee ID:</span><span class="value" id="profile-id">GS-SUP-104</span></div>
+                    <div class="info-row"><span class="label">Email:</span><span class="value" id="profile-email">rajesh.p@gyanshala.org</span></div>
+                    <div class="info-row"><span class="label">Mobile Number:</span><span class="value" id="profile-mobile">+91 98765 00000</span></div>
+                    <div class="info-row"><span class="label">Address:</span><span class="value" id="profile-address">-</span></div>
                     <div class="info-row"><span class="label">Assigned District:</span><span class="value">Ahmedabad North</span></div>
                 </div>
                 

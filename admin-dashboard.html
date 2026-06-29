@@ -122,7 +122,7 @@
                     <span class="badge-dot" style="display: none;"></span>
                 </button>
                 
-                <div class="avatar">AD</div>
+                <div class="avatar" style="cursor: pointer;" onclick="document.querySelector('.sidebar-nav .nav-item[data-target=\'profile\']')?.click()">AD</div>
             </div>
         </header>
 
@@ -520,9 +520,9 @@
                 <h2>Administrator</h2>
                 <span class="badge badge-active" style="margin-bottom:20px;">Main Office Admin</span>
                 <div style="text-align:left; border-top:1px solid var(--border); padding-top:20px;">
-                    <div class="info-row" style="margin-bottom:10px;"><span class="label">Email:</span> <span class="value" style="font-weight:600; color:var(--text-dark);"></span></div>
-                    <div class="info-row" style="margin-bottom:10px;"><span class="label">Mobile:</span> <span class="value" style="font-weight:600; color:var(--text-dark);"></span></div>
-                    <div class="info-row"><span class="label">Location:</span> <span class="value" style="font-weight:600; color:var(--text-dark);"></span></div>
+                    <div class="info-row" style="margin-bottom:10px;"><span class="label">Email:</span> <span class="value" id="profile-email" style="font-weight:600; color:var(--text-dark);"></span></div>
+                    <div class="info-row" style="margin-bottom:10px;"><span class="label">Mobile:</span> <span class="value" id="profile-mobile" style="font-weight:600; color:var(--text-dark);"></span></div>
+                    <div class="info-row"><span class="label">Address:</span> <span class="value" id="profile-address" style="font-weight:600; color:var(--text-dark);"></span></div>
                 </div>
             </div>
         </section>

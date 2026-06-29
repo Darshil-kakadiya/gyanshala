@@ -37,13 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileRoleBadge = document.querySelector('.profile-card .badge');
     if (profileRoleBadge) profileRoleBadge.textContent = currentUser.role;
 
-    const profileInfoValues = document.querySelectorAll('#view-profile .info-row .value');
-    if (profileInfoValues.length >= 4) {
-        profileInfoValues[0].textContent = currentUser.id || 'GS-SUP-104';
-        profileInfoValues[1].textContent = currentUser.email;
-        profileInfoValues[2].textContent = currentUser.mobile;
-        profileInfoValues[3].textContent = `${currentUser.city || ''}, ${currentUser.state || ''}`;
-    }
+    const pEmail = document.getElementById('profile-email');
+    if(pEmail) pEmail.textContent = currentUser.email;
+
+    const pMobile = document.getElementById('profile-mobile');
+    if(pMobile) pMobile.textContent = currentUser.mobile || 'N/A';
+
+    const pAddress = document.getElementById('profile-address');
+    if(pAddress) pAddress.textContent = currentUser.address || `${currentUser.city || ''}, ${currentUser.state || ''}`;
 
     // Logout Functionality
     const logoutBtns = document.querySelectorAll('.logout-btn');
@@ -73,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add active to nav
         const activeNav = document.querySelector(`.sidebar-nav .nav-item[data-target="${viewId}"]`);
         if (activeNav) activeNav.classList.add('active');
+
+        // Close sidebar on mobile and close notification panel
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        const notificationPanel = document.getElementById('notification-panel');
+        if (notificationPanel) notificationPanel.classList.remove('open');
 
         // Lazy-load Google Maps for centers view
         if (viewId === 'centers') {
@@ -527,9 +534,10 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationPanel.classList.toggle('open');
             if (notificationPanel.classList.contains('open')) {
                 markNotificationsAsRead();
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar) sidebar.classList.remove('mobile-open');
             }
         }
-        closeDrawer();
     }
 
     if(notificationBtn) notificationBtn.addEventListener('click', togglePanel);

@@ -302,11 +302,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: 'USER-' + Date.now(),
                     fullName: document.getElementById('fullName').value.trim(),
                     email: email,
-                    mobile: '9876543210',
+                    mobile: document.getElementById('mobile')?.value.trim() || '9876543210',
                     dob: '1990-01-01',
                     gender: 'Male',
                     role: role,
-                    address: '',
+                    address: document.getElementById('address')?.value.trim() || '',
                     area: '',
                     city: 'Ahmedabad',
                     state: 'Gujarat',
@@ -509,12 +509,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (modalContinueBtn) {
-        modalContinueBtn.addEventListener('click', () => {
+    const modalConfirmBtn = document.getElementById('btn-modal-confirm');
+    if (modalConfirmBtn) {
+        modalConfirmBtn.addEventListener('click', () => {
             const selectedRadio = document.querySelector('input[name="google-role"]:checked');
+            const googleMobile = document.getElementById('google-mobile')?.value.trim();
+            const googleAddress = document.getElementById('google-address')?.value.trim();
             
             if (!selectedRadio) {
                 alert('Please select exactly one role before continuing.');
+                return;
+            }
+            if (!googleMobile || !googleAddress) {
+                alert('Please provide your mobile number and address.');
                 return;
             }
             if (!googleTempUser) {
@@ -524,6 +531,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const chosenRole = selectedRadio.value;
             googleTempUser.role = chosenRole;
+            googleTempUser.mobile = googleMobile;
+            googleTempUser.address = googleAddress;
 
             // Save user in local users database
             const users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -535,6 +544,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('users', JSON.stringify(users));
             } else {
                 userObj.role = chosenRole;
+                userObj.mobile = googleMobile;
+                userObj.address = googleAddress;
                 if (googleTempUser.picture) {
                     userObj.picture = googleTempUser.picture;
                 }

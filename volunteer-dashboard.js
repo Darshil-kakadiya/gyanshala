@@ -88,6 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeNav = document.querySelector(`.sidebar-nav .nav-item[data-target="${viewId}"]`);
         if (activeNav) activeNav.classList.add('active');
 
+        // Close sidebar on mobile and close notification panel
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        const notificationPanel = document.getElementById('notification-panel');
+        if (notificationPanel) notificationPanel.classList.remove('open');
+
         function safeRender(vId, retries = 5) {
             if (typeof Chart === 'undefined' && retries > 0) {
                 setTimeout(() => safeRender(vId, retries - 1), 100);
@@ -527,6 +533,8 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationPanel.classList.toggle('open');
             if (notificationPanel.classList.contains('open')) {
                 markNotificationsAsRead();
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar) sidebar.classList.remove('mobile-open');
             }
         }
     }
@@ -594,13 +602,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // I. Profile Page
     function renderProfile() {
-        const infoValues = document.querySelectorAll('#view-profile .info-row .value');
-        if (infoValues.length >= 5) {
-            infoValues[0].textContent = currentUser.id || 'VOL-2026-014';
-            infoValues[1].textContent = currentUser.college || 'VGEC';
-            infoValues[2].textContent = currentUser.university || 'GTU';
-            infoValues[3].textContent = currentUser.supervisor || 'Priya Shah';
-            infoValues[4].textContent = currentUser.duration || '2 Weeks';
+        const pId = document.getElementById('profile-id');
+        if(pId) pId.textContent = currentUser.id || 'VOL-2026-014';
+        
+        const pEmail = document.getElementById('profile-email');
+        if(pEmail) pEmail.textContent = currentUser.email;
+
+        const pMobile = document.getElementById('profile-mobile');
+        if(pMobile) pMobile.textContent = currentUser.mobile || 'N/A';
+
+        const pAddress = document.getElementById('profile-address');
+        if(pAddress) pAddress.textContent = currentUser.address || `${currentUser.city || ''}, ${currentUser.state || ''}`;
+
+        const infoValues = document.querySelectorAll('#view-profile .info-row .value:not([id])');
+        if (infoValues.length >= 4) {
+            infoValues[0].textContent = currentUser.college || 'VGEC';
+            infoValues[1].textContent = currentUser.university || 'GTU';
+            infoValues[2].textContent = currentUser.supervisor || 'Priya Shah';
+            infoValues[3].textContent = currentUser.duration || '2 Weeks';
         }
     }
 
