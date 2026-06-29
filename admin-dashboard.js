@@ -96,7 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeNav) activeNav.classList.add('active');
 
         // Render target page content dynamically
-        triggerViewRenderer(viewId);
+        function safeRender(vId, retries = 5) {
+            if (typeof Chart === 'undefined' && retries > 0) {
+                setTimeout(() => safeRender(vId, retries - 1), 100);
+                return;
+            }
+            // Delay to allow display:block layout to settle for Chart.js
+            setTimeout(() => triggerViewRenderer(vId), 50);
+        }
+        safeRender(viewId);
     }
 
     navItems.forEach(item => {
