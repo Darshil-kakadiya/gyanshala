@@ -292,34 +292,6 @@ h1, h2, h3, h4, h5, h6 {
 .map-marker:hover .marker-tooltip { opacity: 1; visibility: visible; top: -70px; }
 /* Universal Mobile Responsive Overrides */
 @media(max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: -280px;
-    height: 100vh;
-    z-index: 1001;
-    transition: left 0.3s ease;
-    width: 280px !important;
-  }
-  .sidebar.mobile-open {
-    left: 0;
-  }
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    display: none !important;
-  }
-  .sidebar-overlay.active {
-    display: block !important;
-  }
-  .mobile-only {
-    display: flex !important;
-  }
   .grid-stats, .grid-cards, .grid-split {
     grid-template-columns: 1fr !important;
   }

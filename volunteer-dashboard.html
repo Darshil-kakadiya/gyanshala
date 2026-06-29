@@ -6,60 +6,43 @@
     <title>Gyanshala Volunteer Dashboard</title>
     <link rel="stylesheet" href="volunteer-dashboard.css">
     <link rel="stylesheet" href="dashboard-extension.css">
+    <link rel="stylesheet" href="shared-sidebar.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="shared-sidebar.js" defer></script>
 </head>
-<body>
+<body data-role="volunteer" data-active-page="home">
 
 <div class="app-container">
     
     <!-- Left Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" aria-expanded="false">
         <div class="sidebar-header" id="menu-toggle" style="cursor: pointer;">
             <span class="material-symbols-rounded text-primary" style="font-size: 32px;">school</span>
             <h2>Gyanshala</h2>
         </div>
         
+        <!-- Mobile User Profile -->
+        <div class="sidebar-mobile-profile">
+            <div class="avatar" id="sidebar-mobile-avatar">V</div>
+            <div class="sidebar-mobile-profile-info">
+                <span class="name" id="sidebar-mobile-name">Loading...</span>
+                <span class="role" id="sidebar-mobile-role">Volunteer</span>
+            </div>
+        </div>
+        
         <nav class="sidebar-nav">
-            <a href="#" class="nav-item active" data-target="home">
-                <span class="material-symbols-rounded">dashboard</span> <span>Dashboard</span>
-            </a>
-            <a href="#" class="nav-item" data-target="centers">
-                <span class="material-symbols-rounded">corporate_fare</span> <span>Assigned Centers</span>
-            </a>
-            <a href="#" class="nav-item" data-target="schedule">
-                <span class="material-symbols-rounded">schedule</span> <span>Activity Schedule</span>
-            </a>
-            <a href="#" class="nav-item" data-target="attendance">
-                <span class="material-symbols-rounded">event_available</span> <span>Attendance</span>
-            </a>
-            <a href="#" class="nav-item" data-target="submitreport">
-                <span class="material-symbols-rounded">assignment</span> <span>Submit Report</span>
-            </a>
-            <a href="#" class="nav-item" data-target="photos">
-                <span class="material-symbols-rounded">photo_library</span> <span>Upload Photos</span>
-            </a>
-            <a href="#" class="nav-item" data-target="hours">
-                <span class="material-symbols-rounded">hourglass</span> <span>Volunteer Hours</span>
-            </a>
-            <a href="#" class="nav-item" data-target="messages">
-                <span class="material-symbols-rounded">chat</span> <span>Messages</span>
-            </a>
-            <a href="#" class="nav-item" data-target="profile">
-                <span class="material-symbols-rounded">person</span> <span>Profile</span>
-            </a>
-            <a href="#" class="nav-item" data-target="settings">
-                <span class="material-symbols-rounded">settings</span> <span>Settings</span>
-            </a>
+            <!-- Dynamically populated by shared-sidebar.js -->
         </nav>
 
         <div class="sidebar-footer">
             <button class="logout-btn">
                 <span class="material-symbols-rounded">logout</span> <span>Logout</span>
             </button>
+            <div class="sidebar-version">v1.0.0 &copy; 2026 Gyanshala</div>
         </div>
     </aside>
     
-    <div class="sidebar-overlay" id="mobile-sidebar-overlay" style="display: none;"></div>
+    <div class="sidebar-overlay" id="mobile-sidebar-overlay"></div>
 
     <!-- Main Content Area -->
     <div class="main-content">

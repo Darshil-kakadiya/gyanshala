@@ -1,0 +1,162 @@
+/* shared-sidebar.css */
+
+/* --- Mobile Drawer Variables --- */
+:root {
+  --sidebar-mobile-width: 320px;
+  --sidebar-tablet-width: 360px;
+}
+
+/* --- Mobile Profile Section (Hidden on Desktop) --- */
+.sidebar-mobile-profile {
+  display: none;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  gap: 16px;
+}
+
+.sidebar-mobile-profile .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.sidebar-mobile-profile-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-mobile-profile-info .name {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-mobile-profile-info .role {
+  color: var(--text-body);
+  font-size: 0.85rem;
+  margin-top: 4px;
+  text-transform: capitalize;
+}
+
+/* --- App Version in Footer --- */
+.sidebar-version {
+  font-size: 0.75rem;
+  color: var(--text-body);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* --- Ensure Logout is always visible --- */
+.sidebar-footer {
+  padding: 24px 16px;
+  border-top: 1px solid var(--border);
+  background-color: var(--surface); /* Ensure background is solid so it covers scrolling menu */
+  z-index: 2;
+}
+.sidebar-nav {
+  flex: 1;
+  padding: 8px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1;
+}
+
+/* --- Responsive Overrides --- */
+
+/* For Desktop - Reset potential overriding inline styles or misconfigured classes */
+@media (min-width: 992px) {
+  .sidebar {
+    transform: none !important;
+    display: flex !important;
+  }
+  .sidebar-overlay {
+    display: none !important;
+  }
+  #mobile-menu-btn {
+    display: none !important;
+  }
+}
+
+/* For Mobile and Tablet */
+@media (max-width: 991.98px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-tablet-width);
+    max-width: 90vw;
+    height: 100vh;
+    z-index: 1001;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+  }
+  
+  /* Show Mobile Profile */
+  .sidebar-mobile-profile {
+    display: flex;
+  }
+  
+  /* Touch Optimization for Mobile Menu */
+  .nav-item {
+    min-height: 48px; /* Touch target size */
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+    display: block !important;
+  }
+  
+  #mobile-menu-btn {
+    display: flex !important;
+  }
+  
+  /* Prevent body scrolling when menu is open */
+  body.sidebar-open-body {
+    overflow: hidden !important;
+  }
+}
+
+/* For small phones */
+@media (max-width: 575.98px) {
+  .sidebar {
+    width: var(--sidebar-mobile-width) !important;
+  }
+}
